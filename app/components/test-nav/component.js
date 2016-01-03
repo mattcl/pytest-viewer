@@ -1,0 +1,44 @@
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  tests: null,
+  availableSortKeys: [
+    'name',
+    'duration',
+    'outcome'
+  ],
+  sortKey: 'outcome',
+  sortKeys: ['outcomeSortValue'],
+  sortOrder: 'asc',
+
+  filterValues: [],
+
+  sortedTests: Ember.computed.sort('filteredTests', 'sortKeys'),
+  filteredTests: Ember.computed.filter('tests', function(test) {
+    var filters = this.get('filterValues');
+    if (filters.get('length') === 0) {
+      return true;
+    }
+    return filters.contains(test.get('outcome'));
+  }).property('tests', 'filterValues.[]'),
+
+  observeSortChange: function() {
+    var key = this.get('sortKey');
+    var order = this.get('sortOrder');
+
+    // sorting by the string values doesn't make sense here
+    if (key === 'outcome') {
+      key = 'outcomeSortValue';
+    }
+
+    if (order === 'desc') {
+      key += ':desc';
+    }
+
+    var currentKeys = this.get('sortKeys');
+
+    if (key !== currentKeys[0]) {
+      this.set('sortKeys', [key]);
+    }
+  }.observes('sortOrder', 'sortKey'),
+});

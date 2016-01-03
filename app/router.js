@@ -6,12 +6,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('reports', function() {
-    this.route('report', {path: 'reports/:report_id'}, function() {
-      this.route('tests', function() {
-        this.route('test', {path: 'tests/:test_id'});
-      });
-    });
+  this.route('reports', function() {});
+  this.route('report', {path: 'report/:report_id'}, function() {
+    this.route('test', {path: 'test/:test_id'}, function() {});
   });
 });
 
