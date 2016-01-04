@@ -1,39 +1,40 @@
-<h2><!-- this is just a spacer --></h2>
-<div class="test-nav list-group">
-  <div class="list-group-item">
-    <h4>Tests</h4>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          filter
-          {{#bs-button-group value=filterValues type="checkbox"}}
-            {{#bs-button value='error'}}error{{/bs-button}}
-            {{#bs-button value='failed'}}failed{{/bs-button}}
-            {{#bs-button value='xpassed'}}xpassed{{/bs-button}}
-            {{#bs-button value='xfailed'}}xfailed{{/bs-button}}
-            {{#bs-button value='skipped'}}skipped{{/bs-button}}
-            {{#bs-button value='passed'}}passed{{/bs-button}}
-          {{/bs-button-group}}
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-inline" role="form">
-          order by
-          <div class="form-group">
-            {{view 'select' content=availableSortKeys value=sortKey class='form-control'}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        {{#bs-button-group value=sortOrder type="radio"}}
-          {{#bs-button value='asc'}}asc{{/bs-button}}
-          {{#bs-button value='desc'}}desc{{/bs-button}}
+<div class="panel-heading">Tests</div>
+<div class="list-group clickable" {{action 'toggleCollapsed' on='click'}}>
+  <div {{bind-attr class=':toggle :list-group-item filtersCollapsed:collapsed'}}>filters</div>
+</div>
+{{#bs-collapse collapsed=filtersCollapsed class='panel-body'}}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        {{#bs-button-group value=filterValues type="checkbox"}}
+          {{#bs-button value='error'}}error{{/bs-button}}
+          {{#bs-button value='failed'}}failed{{/bs-button}}
+          {{#bs-button value='xpassed'}}xpassed{{/bs-button}}
+          {{#bs-button value='xfailed'}}xfailed{{/bs-button}}
+          {{#bs-button value='skipped'}}skipped{{/bs-button}}
+          {{#bs-button value='passed'}}passed{{/bs-button}}
         {{/bs-button-group}}
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inline" role="form">
+        order by
+        <div class="form-group">
+          {{view 'select' content=availableSortKeys value=sortKey class='form-control'}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      {{#bs-button-group value=sortOrder type="radio"}}
+        {{#bs-button value='asc'}}asc{{/bs-button}}
+        {{#bs-button value='desc'}}desc{{/bs-button}}
+      {{/bs-button-group}}
+    </div>
+  </div>
+{{/bs-collapse}}
+<div class="wrappable list-group">
   {{#each sortedTests as |test|}}
     {{#link-to 'report.test' test.id class=(outcome-style test.outcome prefix='list-group-item-' additional='list-group-item')}}
       {{test.name}}

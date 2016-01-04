@@ -1,0 +1,18 @@
+<div class="panel-heading clickable" {{action 'toggleCollapsed' on='click'}} >
+  <div {{bind-attr class=':toggle collapsed'}}>
+    Environment
+  </div>
+</div>
+{{#bs-collapse collapsed=collapsed}}
+<table class="table table-no-margin">
+  <tbody>
+    {{#each envMap as |data|}}
+      <tr>
+        <td>{{data.key}}</td>
+        <td class="wrappable">{{data.value}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/bs-collapse}}
+{{yield}}

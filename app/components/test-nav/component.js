@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['panel', 'panel-default'],
+
+  filtersCollapsed: false,
+
   tests: null,
   availableSortKeys: [
     'name',
@@ -41,4 +45,11 @@ export default Ember.Component.extend({
       this.set('sortKeys', [key]);
     }
   }.observes('sortOrder', 'sortKey'),
+
+  actions: {
+    toggleCollapsed: function() {
+      var val = this.get('filtersCollapsed');
+      this.set('filtersCollapsed', !val);
+    }
+  }
 });
