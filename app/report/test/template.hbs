@@ -1,4 +1,11 @@
-<h2 class="{{outcome-style model.outcome prefix='text-'}}">
-  {{model.name}}
-</h2>
+<h2 class="{{outcome-style model.outcome prefix='text-'}}">{{model.name}}</h2>
+{{#if model.setup}}
+  {{test-stage stage=model.setup}}
+{{/if}}
+{{#if model.call}}
+  {{test-stage stage=model.call}}
+{{/if}}
+{{#if model.teardown}}
+  {{test-stage stage=model.teardown}}
+{{/if}}
 {{outlet}}

@@ -1,0 +1,14 @@
+<div class="panel-heading clickable" {{action 'toggleCollapsed' on='click'}} >
+  <div {{bind-attr class=':toggle collapsed'}}>
+    {{stage.name}}
+  </div>
+</div>
+{{#bs-collapse collapsed=collapsed class='panel-body'}}
+  {{#if stage.stdout}}
+    stdout:
+    <pre>
+      {{stage.stdout}}
+    </pre>
+    {{yield}}
+  {{/if}}
+{{/bs-collapse}}

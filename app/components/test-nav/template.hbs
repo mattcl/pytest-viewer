@@ -1,5 +1,11 @@
-<div class="panel-heading">Tests</div>
-<div class="list-group clickable" {{action 'toggleCollapsed' on='click'}}>
+<div class="panel-heading">Tests - {{summary.num_tests}} total in {{format-number summary.duration format='0.000'}} seconds</div>
+<div class="list-group clickable" {{action 'toggleSummaryCollapsed' on='click'}}>
+  <div {{bind-attr class=':toggle :list-group-item summaryCollapsed:collapsed'}}>summary</div>
+</div>
+{{#bs-collapse collapsed=summaryCollapsed class='panel-body'}}
+  {{test-nav-summary summary=summary}}
+{{/bs-collapse}}
+<div class="list-group clickable" {{action 'toggleFiltersCollapsed' on='click'}}>
   <div {{bind-attr class=':toggle :list-group-item filtersCollapsed:collapsed'}}>filters</div>
 </div>
 {{#bs-collapse collapsed=filtersCollapsed class='panel-body'}}

@@ -1,0 +1,12 @@
+Note that the counts may not add up to the total number of tests due to the
+fact that individual test stages can result in errors, etc.
+<table class="table table-no-margin">
+  <tbody>
+    {{#each summaryMap as |data|}}
+      <tr>
+        <td>{{data.key}}</td>
+        <td class="wrappable">{{data.value}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
