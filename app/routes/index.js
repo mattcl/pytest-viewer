@@ -2,37 +2,45 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   actions: {
-    load: function(data) {
-      this.transitionTo('');
+    loadData: function(data) {
       // empty the store first, since we don't want to persist data between
       // file loads
-      this.store.findAll('report').then(function(reports) {
-        reports.toArray().forEach(function(report) {
-          report.destroyRecord();
-        });
-      });
       this.store.findAll('test').then(function(tests) {
-        tests.toArray().forEach(function(test) {
-          test.destroyRecord();
+        var promises = tests.toArray().map(function(test) {
+          return test.destroyRecord();
         });
+
+        return Ember.RSVP.all(promises);
+      }).then(() => {
+        return this.store.findAll('report');
+      }).then(function(reports) {
+        var promises = reports.toArray().map(function(report) {
+          return report.destroyRecord();
+        });
+
+        return Ember.RSVP.all(promises);
+      }).then(() => {
+        this.store.unloadAll('test');
+        this.store.unloadAll('report');
+      }).then(() => {
+        data = $.parseJSON(data);
+
+        return this.store.push(data);
+      }).then(() => {
+        var promises = this.store.peekAll('test').map(function(test) {
+          return test.save();
+        });
+
+        return Ember.RSVP.all(promises);
+      }).then(() => {
+        var promises = this.store.peekAll('report').map(function(report) {
+          return report.save();
+        });
+
+        return Ember.RSVP.all(promises);
+      }).then(() => {
+        this.transitionTo('reports');
       });
-      this.store.unloadAll('test');
-      this.store.unloadAll('report');
-
-      data = $.parseJSON(data);
-
-      this.store.push(data);
-
-      // commit the records we just pushed
-      this.store.peekAll('report').forEach((report) => {
-        report.get('tests').forEach(function(test) {
-          test.save();
-        });
-        report.save().then(() => {
-          this.transitionTo('report', report.get('id'));
-        });
-      });
-
     }
   }
 });

@@ -1,6 +1,6 @@
 <div class="panel-heading clickable" {{action 'toggleCollapsed' on='click'}} >
   <div {{bind-attr class=':toggle collapsed'}}>
-    {{stage.name}} - {{stage.outcome }} - duration {{format-number stage.duration format='0.000'}} seconds
+    {{stage.name}} - {{stage.outcome }}{{xfailReason}} - duration {{format-number stage.duration format='0.000'}} seconds
   </div>
 </div>
 {{#bs-collapse collapsed=collapsed class='panel-body'}}

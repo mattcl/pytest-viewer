@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   sortedTests: Ember.computed.sort('filteredTests', 'sortKeys'),
   filteredTests: Ember.computed.filter('tests', function(test) {
     var filters = this.get('filterValues');
-    if (filters.get('length') === 0) {
+    if (!filters || filters.get('length') === 0) {
       return true;
     }
     return filters.contains(test.get('outcome'));

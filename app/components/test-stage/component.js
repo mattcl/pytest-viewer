@@ -11,6 +11,15 @@ export default Ember.Component.extend({
     return 'panel-' + level;
   }.property('stage.outcome'),
 
+  xfailReason: function() {
+    var outcome = this.get('stage.outcome');
+    if (outcome === 'xfailed' || outcome === 'xpassed') {
+      return ' - xfail reason: ' + this.get('stage.xfail_reason');
+    } else {
+      return '';
+    }
+  }.property('stage.outcome'),
+
   observeStageForCollapse: function() {
     var outcome = this.get('stage.outcome');
     var level = levelForOutcome(outcome);
