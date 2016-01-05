@@ -8,7 +8,7 @@ export default Ember.TextField.extend({
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = (e) => {
-        var uploadedFile = e.srcElement.result;
+        var uploadedFile = e.target.result;
         this.sendAction('action', uploadedFile);
       };
       reader.readAsText(input.files[0]);
