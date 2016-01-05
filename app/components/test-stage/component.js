@@ -1,29 +1,21 @@
 import Ember from 'ember';
+import levelForOutcome from 'pytest-viewer/utils/level-for-outcome';
 
 export default Ember.Component.extend({
   classNameBindings: [':panel', 'panelColor'],
   collapsed: false,
 
   panelColor: function() {
-    var level = this.get('stageLevel');
-    return 'panel-' + level;
-  }.property('stageLevel'),
-
-  stageLevel: function() {
     var outcome = this.get('stage.outcome');
-    if (outcome === 'passed') {
-      return 'success';
-    } else if (outcome === 'xpassed' || outcome === 'skipped') {
-      return 'warning';
-    } else {
-      return 'danger';
-    }
+    var level = levelForOutcome(outcome);
+    return 'panel-' + level;
   }.property('stage.outcome'),
 
   observeStageForCollapse: function() {
-    var level = this.get('stageLevel');
+    var outcome = this.get('stage.outcome');
+    var level = levelForOutcome(outcome);
     this.set('collapsed', (level !== 'danger'));
-  }.observes('stage').on('init'),
+  }.observes('stage.outcome').on('init'),
 
   actions: {
     toggleCollapsed: function() {

@@ -1,0 +1,8 @@
+<label {{bind-attr class=':toggle :clickable collapsed'}} {{action 'toggleCollapsed' on='click'}}>{{label}}:</label>
+{{#bs-collapse collapsed=collapsed}}
+  <pre>
+    {{output}}
+  </pre>
+  {{yield}}
+{{/bs-collapse}}
+

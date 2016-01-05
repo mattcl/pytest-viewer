@@ -1,4 +1,4 @@
-<h2 class="{{outcome-style model.outcome prefix='text-'}}">{{model.name}}</h2>
+<h2 class="{{outcome-style model.outcome prefix='text-'}}">{{model.outcome}} - {{model.name}} <small>duration {{format-number model.duration format='0.000'}} seconds</small></h2>
 {{#if model.setup}}
   {{test-stage stage=model.setup}}
 {{/if}}

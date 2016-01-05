@@ -1,14 +1,17 @@
 <div class="panel-heading clickable" {{action 'toggleCollapsed' on='click'}} >
   <div {{bind-attr class=':toggle collapsed'}}>
-    {{stage.name}}
+    {{stage.name}} - {{stage.outcome }} - duration {{format-number stage.duration format='0.000'}} seconds
   </div>
 </div>
 {{#bs-collapse collapsed=collapsed class='panel-body'}}
-  {{#if stage.stdout}}
-    stdout:
-    <pre>
-      {{stage.stdout}}
-    </pre>
-    {{yield}}
+  {{#if stage.longrepr}}
+    {{test-stage-section label='report' output=stage.longrepr}}
   {{/if}}
+  {{#if stage.stdout}}
+    {{test-stage-section label='stdout' output=stage.stdout}}
+  {{/if}}
+  {{#if stage.stderr}}
+    {{test-stage-section label='stderr' output=stage.stderr}}
+  {{/if}}
+  {{yield}}
 {{/bs-collapse}}
