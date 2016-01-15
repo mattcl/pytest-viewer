@@ -10,7 +10,8 @@ export default Ember.Component.extend({
   availableSortKeys: [
     'name',
     'duration',
-    'outcome'
+    'outcome',
+    'run order'
   ],
   sortKey: 'outcome',
   sortKeys: ['outcomeSortValue'],
@@ -34,6 +35,10 @@ export default Ember.Component.extend({
     // sorting by the string values doesn't make sense here
     if (key === 'outcome') {
       key = 'outcomeSortValue';
+    }
+
+    if (key === 'run order') {
+      key = 'run_index';
     }
 
     if (order === 'desc') {

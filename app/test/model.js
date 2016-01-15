@@ -4,6 +4,7 @@ export default DS.Model.extend({
   duration: DS.attr('number'),
   outcome: DS.attr('string'),
   name: DS.attr('string'),
+  run_index: DS.attr('number'),
   setup: DS.attr(),
   teardown: DS.attr(),
   call: DS.attr(),
